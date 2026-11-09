@@ -26,7 +26,7 @@ const english = api => [
     </ul>,
     <p className="font-p2">
         An output's value decays by a factor of (1 - 2<sup>-20</sup>) per block after its
-        reference height, about 5% a year.
+        reference height: at the 15-minute block target since merge mining, about 3.3% a year.
     </p>,
 ]
 
@@ -53,7 +53,8 @@ const russian = api => [
     </ul>,
     <p className="font-p2">
         Стоимость выхода умножается на (1 - 2<sup>-20</sup>) за каждый блок после его
-        опорной высоты, то есть убывает примерно на 5% в год.
+        опорной высоты: при целевом интервале блоков 15 минут (с перехода на merge mining) это
+        примерно 3,3% в год.
     </p>,
 ]
 

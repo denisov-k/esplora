@@ -79,7 +79,7 @@ export const overview = ({
             isBitcoinNetwork
               ? t`Elapsed time since the last block confirmed. Bitcoin targets one every ~10 minutes.`
               : process.env.FREICOIN
-                ? t`Elapsed time since the last block confirmed. Freicoin targets one every ~10 minutes.`
+                ? t`Elapsed time since the last block confirmed. Freicoin targets one every ~15 minutes.`
                 : t`Elapsed time since the last block confirmed. Liquid targets one every ~1 minute.`
           }
           value={
