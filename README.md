@@ -1,3 +1,5 @@
+> **Freicoin:** this branch adapts it to Freicoin, see [FREICOIN.md](FREICOIN.md).
+
 # Esplora Block Explorer
 
 [![build status](https://api.travis-ci.org/Blockstream/esplora.svg)](https://travis-ci.org/Blockstream/esplora)
