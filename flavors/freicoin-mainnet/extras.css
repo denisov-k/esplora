@@ -281,8 +281,19 @@ a, a:link, a:visited, a:hover, a:focus,
 .metric-bar-header-value,
 .language-selector,
 .title-bar-recent h1 .active,
-.btn-primary {
+.btn-primary,
+.blocks-table-card,
+.transaction-table-row .transaction-table-transaction-value,
+.transaction-table-row .transaction-table-transaction-size,
+.tooltip-dialogue,
+.block-grid__tooltip,
+.block-grid__tooltip dd,
+.block-details-card-progress-header .usage-number,
+.pending-block-filling .usage-number {
   color: var(--frc-fg);
+}
+.table-title-row a {
+  color: var(--frc-fg) !important;
 }
 .frc-footer a {
   color: var(--frc-muted);
