@@ -1,0 +1,362 @@
+/* Freicoin header: one line, freicoin.ru's coin, name and the explorer's on the left, the
+   navigation on the right, a rule between it and the search */
+.nav-container {
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--frc-line);
+  gap: 16px;
+}
+.navbar-brand {
+  height: auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  white-space: nowrap;
+  text-decoration: none;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--frc-fg);
+}
+.navbar-brand:hover {
+  color: var(--frc-fg);
+}
+.navbar-brand .navbar-brand-name {
+  color: var(--frc-fg);
+}
+.navbar-brand-sep,
+.navbar-brand-sub {
+  color: var(--frc-muted);
+  font-weight: 500;
+}
+.nav-container .sub-nav {
+  padding-top: 0;
+}
+
+/* upstream moves the navigation to a line of its own below 1328px, for its menu button: keep it on
+   the brand's line down to phone widths */
+@media only screen and (max-width: 1328px) {
+  .nav-container {
+    flex-wrap: nowrap;
+  }
+  .nav-container .sub-nav {
+    order: 0;
+    margin-top: 0;
+    width: auto;
+    gap: 24px;
+    justify-content: flex-end;
+  }
+}
+@media only screen and (max-width: 720px) {
+  .nav-container {
+    flex-wrap: wrap;
+  }
+  .nav-container .sub-nav {
+    width: 100%;
+    gap: 20px;
+    justify-content: flex-start;
+  }
+}
+
+/* Freicoin footer: one thin line */
+.explorer-container > .frc-footer {
+  height: auto;
+  padding: 20px 0;
+  margin-top: 48px;
+  border-top: 1px solid var(--frc-line);
+}
+.frc-footer-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px 32px;
+  flex-wrap: wrap;
+}
+.frc-footer .language {
+  margin-top: 0;
+  min-width: 140px;
+}
+.frc-footer .language-selector {
+  padding: 8px 32px 8px 10px;
+}
+.frc-footer .language-selector-arrow {
+  top: 12px;
+  right: 10px;
+}
+.frc-footer-links {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+.frc-footer a {
+  color: var(--frc-muted);
+  text-decoration: none;
+  font-size: 14px;
+}
+.frc-footer a:hover {
+  color: var(--foreground-link-color);
+}
+.frc-footer-credit {
+  margin: 0;
+}
+
+
+/* Rigid Square has no Cyrillic, which fell back to a serif font: Inter (variable) draws its
+   Cyrillic, declared for each of the weights Rigid Square is, so that the faces combine by
+   unicode-range rather than lose to the exact-weight Rigid Square ones */
+@font-face {
+  font-family: "Rigid Square";
+  src: url("font/Inter-VariableFont_opsz,wght.ttf") format("opentype");
+  font-weight: 100;
+  font-style: normal;
+  unicode-range: U+0400-04FF, U+0500-052F, U+2116;
+}
+@font-face {
+  font-family: "Rigid Square";
+  src: url("font/Inter-VariableFont_opsz,wght.ttf") format("opentype");
+  font-weight: 200;
+  font-style: normal;
+  unicode-range: U+0400-04FF, U+0500-052F, U+2116;
+}
+@font-face {
+  font-family: "Rigid Square";
+  src: url("font/Inter-VariableFont_opsz,wght.ttf") format("opentype");
+  font-weight: 300;
+  font-style: normal;
+  unicode-range: U+0400-04FF, U+0500-052F, U+2116;
+}
+@font-face {
+  font-family: "Rigid Square";
+  src: url("font/Inter-VariableFont_opsz,wght.ttf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  unicode-range: U+0400-04FF, U+0500-052F, U+2116;
+}
+@font-face {
+  font-family: "Rigid Square";
+  src: url("font/Inter-VariableFont_opsz,wght.ttf") format("opentype");
+  font-weight: 500;
+  font-style: normal;
+  unicode-range: U+0400-04FF, U+0500-052F, U+2116;
+}
+@font-face {
+  font-family: "Rigid Square";
+  src: url("font/Inter-VariableFont_opsz,wght.ttf") format("opentype");
+  font-weight: 600;
+  font-style: normal;
+  unicode-range: U+0400-04FF, U+0500-052F, U+2116;
+}
+@font-face {
+  font-family: "Rigid Square";
+  src: url("font/Inter-VariableFont_opsz,wght.ttf") format("opentype");
+  font-weight: 700;
+  font-style: normal;
+  unicode-range: U+0400-04FF, U+0500-052F, U+2116;
+}
+@font-face {
+  font-family: "Rigid Square";
+  src: url("font/Inter-VariableFont_opsz,wght.ttf") format("opentype");
+  font-weight: 800;
+  font-style: normal;
+  unicode-range: U+0400-04FF, U+0500-052F, U+2116;
+}
+@font-face {
+  font-family: "Rigid Square";
+  src: url("font/Inter-VariableFont_opsz,wght.ttf") format("opentype");
+  font-weight: 900;
+  font-style: normal;
+  unicode-range: U+0400-04FF, U+0500-052F, U+2116;
+}
+
+/* the overview has three cards without the bitcoin price one: they share the row */
+.overview-body > .info-card-container {
+  flex: 1 1 0;
+  width: auto;
+}
+
+/* Freicoin: the wallet's two palettes (freicoin.ru's --bg, --card, --fg, --sub, --accent, --line,
+   --ok, --err, --warn), on <html data-theme> as js/theme.js sets it; upstream's hard-coded colours
+   are mapped onto them below */
+:root,
+:root[data-theme="dark"] {
+  --frc-bg: #0f1115;
+  --frc-card: #181b22;
+  --frc-fg: #e8eaed;
+  --frc-muted: #9aa0aa;
+  --frc-accent-rgb: 62, 166, 255;
+  --frc-line: #262a33;
+  --frc-raised: #20242c;
+  --frc-field: #343944;
+  --frc-ok-rgb: 76, 175, 80;
+  --frc-err-rgb: 239, 83, 80;
+  --frc-warn-rgb: 224, 160, 48;
+  --frc-hover: rgba(255, 255, 255, .08);
+}
+:root[data-theme="light"] {
+  color-scheme: light;
+  --frc-bg: #f6f7f9;
+  --frc-card: #ffffff;
+  --frc-fg: #1a1d24;
+  --frc-muted: #6b727e;
+  --frc-accent-rgb: 30, 136, 229;
+  --frc-line: #e2e5ea;
+  --frc-raised: #f0f2f5;
+  --frc-field: #d3d8df;
+  --frc-ok-rgb: 46, 125, 50;
+  --frc-err-rgb: 211, 47, 47;
+  --frc-warn-rgb: 178, 106, 0;
+  --frc-hover: rgba(0, 0, 0, .05);
+}
+:root {
+  --background-color: var(--frc-bg);
+  --surface-primary-color: var(--frc-card);
+  --surface-primary-alt-color: var(--frc-raised);
+  --surface-secondary-color: var(--frc-raised);
+  --field-border-color: var(--frc-field);
+  --foreground-link-color: rgb(var(--frc-accent-rgb));
+  --foreground-muted: var(--frc-muted);
+  --accent-color-rgb: var(--frc-accent-rgb);
+  --blockstream-primary-brand-color-rgb: var(--frc-accent-rgb);
+  --success-color-rgb: var(--frc-ok-rgb);
+  --danger-color-rgb: var(--frc-err-rgb);
+  --warning-color-rgb: var(--frc-warn-rgb);
+}
+
+body {
+  color: var(--frc-fg);
+  background-color: var(--frc-bg);
+}
+
+.theme-toggle {
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--frc-line);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--frc-fg);
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+}
+.theme-toggle::before {
+  content: "\2600"; /* the sun: switch to the light theme */
+}
+:root[data-theme="light"] .theme-toggle::before {
+  content: "\263E"; /* the moon: switch to the dark theme */
+}
+.theme-toggle:hover {
+  border-color: var(--foreground-link-color);
+}
+.nav-container .sub-nav {
+  align-items: center;
+}
+/* the links' bottom padding holds the active underline: the same on top centres their text on the
+   logo's line */
+.nav-container .sub-nav a {
+  padding-top: 12px;
+}
+.nav-container .sub-nav .theme-toggle {
+  margin-top: 0;
+}
+
+/* links and link-coloured text */
+a, a:link, a:visited, a:hover, a:focus,
+.current-address-link,
+.block-number,
+.details-btn > div,
+.tertiary-btn,
+.block-weight-size-bar,
+.transaction-table-row .transaction-table-transaction-id {
+  color: var(--foreground-link-color);
+}
+.block-weight-size-bar {
+  background-color: var(--foreground-link-color);
+}
+
+/* text */
+.navbar-brand, .navbar-brand:hover,
+.sub-nav a, .sub-nav .active,
+.text-white,
+.search-bar-input, .search-bar-input:focus,
+.table-copy-button,
+.usage-number,
+.metric-bar-header-value,
+.language-selector,
+.title-bar-recent h1 .active,
+.btn-primary {
+  color: var(--frc-fg);
+}
+.frc-footer a {
+  color: var(--frc-muted);
+}
+.frc-footer a:hover {
+  color: var(--foreground-link-color);
+}
+
+/* secondary text */
+.search-bar-input::placeholder,
+.search-focus-hotkey,
+.info-stat-title,
+.table-header-title,
+.detail-field-label,
+.transaction-table-field-label,
+.difficulty-adjustment-stat-title,
+.block-timestamp,
+.block-timestamp-icon,
+.text-gray,
+table th,
+.stats-table > div > div:nth-child(1),
+.title-bar-recent h1 a {
+  color: var(--frc-muted);
+}
+
+/* rules and borders */
+.search-bar,
+.nav-link {
+  border-color: var(--frc-field);
+}
+.info-stat,
+.pending-block-stat {
+  border-right-color: var(--frc-line);
+}
+table th,
+table td {
+  border-color: var(--frc-line) !important;
+}
+.info-card-container,
+.block-box,
+.transaction-box,
+.block-details-card,
+.latest-transactions-table {
+  border: 1px solid var(--frc-line);
+}
+
+/* states */
+.vin.active,
+.vout.active {
+  background: var(--frc-hover) !important;
+}
+.transaction-table-row .transaction-table-transaction-fee,
+.transaction-table-row .transaction-table-transaction-fee.success,
+.difficulty-adjustment-stat-value.success,
+.low-fee .info-card-value {
+  color: rgb(var(--frc-ok-rgb));
+}
+.transaction-table-row .transaction-table-transaction-fee.danger,
+.difficulty-adjustment-stat-value.danger,
+.high-fee .info-card-value {
+  color: rgb(var(--frc-err-rgb));
+}
+.eta-blocks,
+.pending-transactions .info-card-value {
+  color: rgb(var(--frc-warn-rgb));
+}
+
+/* the merge mining section of a block page */
+.merge-mining {
+  margin-top: var(--page-gap);
+}
+.merge-mining .section-title {
+  margin-bottom: 8px;
+}
+.merge-mining .mono {
+  word-break: break-all;
+}
