@@ -35,6 +35,7 @@ const liquidNativeAssetId = '6f0279e9ed041c3d710a9f57d0c02928416460c4b722ae3457a
 export const nativeAssetId    = process.env.NATIVE_ASSET_ID    || liquidNativeAssetId
 export const nativeAssetLabel = process.env.NATIVE_ASSET_LABEL || 'BTC'
 export const nativeAssetName  = process.env.NATIVE_ASSET_NAME  || 'Bitcoin'
+export const feeRateUnit      = process.env.FEE_RATE_UNIT      || 'sat/vB'
 
 export const highValueAssetDefinitions = [
   {

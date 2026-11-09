@@ -1,3 +1,4 @@
+import { feeRateUnit } from "../const";
 import { feeEstimateTargets } from "../const";
 import { ElapsedTime } from "../components/elapsed-time";
 import { InfoCard } from "../components/info-card";
@@ -64,6 +65,10 @@ export const overview = ({
     currentBitcoinPrice,
     recommendedFeerate,
   );
+  // Freicoin: with too few transactions for the node to estimate fees from, the minimum relay
+  // fee rate (MIN_FEE_RATE, in the fee rate unit) stands in for the recommended one
+  const minFeerate = process.env.MIN_FEE_RATE ? Number(process.env.MIN_FEE_RATE) : null;
+  const useMinFeerate = !Number.isFinite(recommendedFeerate) && Number.isFinite(minFeerate);
   return (
     <div className="overview">
       <p className="section-title">{t`Overview`}</p>
@@ -73,7 +78,9 @@ export const overview = ({
           tooltip={
             isBitcoinNetwork
               ? t`Elapsed time since the last block confirmed. Bitcoin targets one every ~10 minutes.`
-              : t`Elapsed time since the last block confirmed. Liquid targets one every ~1 minute.`
+              : process.env.FREICOIN
+                ? t`Elapsed time since the last block confirmed. Freicoin targets one every ~10 minutes.`
+                : t`Elapsed time since the last block confirmed. Liquid targets one every ~1 minute.`
           }
           value={
             latestBlock ? (
@@ -91,9 +98,15 @@ export const overview = ({
 
         <InfoCard
           title={t`Recommended Fee`}
-          tooltip={t`Suggested rate (sat/vB) to confirm in the next block or two.`}
-          value={formatFeeRate(recommendedFeerate, t`N/A`)}
-          footer={formatUsd(recommendedFeeUsd, t`N/A`)}
+          tooltip={t`Suggested rate (${feeRateUnit}) to confirm in the next block or two.`}
+          value={formatFeeRate(useMinFeerate ? minFeerate : recommendedFeerate, t`N/A`)}
+          footer={
+            useMinFeerate
+              ? t`Minimum relay fee`
+              : process.env.HIDE_BITCOIN_PRICE
+                ? ""
+                : formatUsd(recommendedFeeUsd, t`N/A`)
+          }
         />
 
         <InfoCard
@@ -107,6 +120,8 @@ export const overview = ({
           }
         />
 
+        {/* the price of bitcoin, unless HIDE_BITCOIN_PRICE */}
+        {!process.env.HIDE_BITCOIN_PRICE ? (
         <InfoCard
           title={t`Bitcoin`}
           iconSrc={`${staticRoot}img/icons/Bitcoin-menu-logo.svg`}
@@ -125,6 +140,7 @@ export const overview = ({
             />
           }
         />
+        ) : null}
       </div>
     </div>
   );

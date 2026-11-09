@@ -743,8 +743,9 @@ export default function main(
       )
        .mapTo(                 { category: 'recent',     method: 'GET', path: '/mempool/recent', bg: true })
 
-    // the market chart contains hourly samples and uses the slow cadence
-    , pollViewing(pollIntervalsMs.slow, 'dashBoard', view$)
+    // the market chart contains hourly samples and uses the slow cadence; it is the price of
+    // bitcoin, not fetched with HIDE_BITCOIN_PRICE
+    , process.env.HIDE_BITCOIN_PRICE ? O.empty() : pollViewing(pollIntervalsMs.slow, 'dashBoard', view$)
         .mapTo({ category: 'bitcoin-market-chart', method: 'GET', path: bitcoinMarketChartUrl, bg: true })
 
     // Refresh the pending block template while the dashboard remains open. A new
@@ -756,7 +757,7 @@ export default function main(
                               , { category: 'recent',    method: 'GET', path: '/mempool/recent' }
                               , { category: 'fee-est',    method: 'GET', path: '/fee-estimates' }
                               , { category: 'mempool',    method: 'GET', path: '/mempool' }
-                              , { category: 'bitcoin-market-chart', method: 'GET', path: bitcoinMarketChartUrl, bg: true }])
+                              , ...(!process.env.HIDE_BITCOIN_PRICE ? [{ category: 'bitcoin-market-chart', method: 'GET', path: bitcoinMarketChartUrl, bg: true }] : [])])
 
     // fetch asset stats and USD prices only while viewing the Liquid dashboard
     , !showHighValueAssets ? O.empty() :

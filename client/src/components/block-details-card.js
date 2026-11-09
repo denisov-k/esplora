@@ -42,7 +42,7 @@ const formatVirtualSize = (weight) => {
   return formatScaledValue(virtualSize, 1_000_000, "vMB");
 };
 
-const formatBlockInterval = (block, previousBlock) => {
+const formatBlockInterval = (block, previousBlock, t) => {
   if (
     !block ||
     !previousBlock ||
@@ -50,18 +50,19 @@ const formatBlockInterval = (block, previousBlock) => {
     !Number.isFinite(block.timestamp) ||
     !Number.isFinite(previousBlock.timestamp)
   ) {
-    return "N/A";
+    return t`N/A`;
   }
 
   return formatDuration(
     (block.timestamp - previousBlock.timestamp) * 1000,
     true,
+    t,
   );
 };
 
 const ExpandedBlockDetails = ({ block, previousBlock, t }) => {
   const weightPercentage = getBlockPercentageUsed(block.weight);
-  const blockInterval = formatBlockInterval(block, previousBlock);
+  const blockInterval = formatBlockInterval(block, previousBlock, t);
 
   return (
     <div id="expanded-block-details" className="expanded-block-details">
@@ -155,7 +156,7 @@ const BlockDetailsCard = ({
   const percentage = block
     ? Math.min(Math.max(getBlockPercentageUsed(block.weight), 0), 100)
     : 0;
-  const blockInterval = formatBlockInterval(block, previousBlock);
+  const blockInterval = formatBlockInterval(block, previousBlock, t);
 
   return (
     <div
@@ -191,7 +192,7 @@ const BlockDetailsCard = ({
               title={block ? formatTime(block.timestamp) : ""}
             >
               {block ? (
-                <ElapsedTime timestamp={block.timestamp} />
+                <ElapsedTime timestamp={block.timestamp} t={t} />
               ) : (
                 t`Loading block...`
               )}

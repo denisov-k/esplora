@@ -1,3 +1,4 @@
+import { feeRateUnit } from "../const";
 import { BlockGrid } from "../components/block-grid";
 import { ElapsedTime } from "../components/elapsed-time";
 import { ExpectedBlockTime } from "../components/expected-block-time";
@@ -504,7 +505,7 @@ const PendingBlockDetailsCard = ({
                   <div className="pending-block-color-reference success"></div>
                   <p className="pending-block-legend-label">
                     {t`Low`} (
-                    {`≤${formatFeeBoundary(feeTierBoundaries.lowMaximum)} sat/vB`}
+                    {`≤${formatFeeBoundary(feeTierBoundaries.lowMaximum)} ${feeRateUnit}`}
                     )
                   </p>
                 </div>
@@ -512,7 +513,7 @@ const PendingBlockDetailsCard = ({
                   <div className="pending-block-color-reference warning"></div>
                   <p className="pending-block-legend-label">
                     {t`Medium`} (
-                    {`>${formatFeeBoundary(feeTierBoundaries.lowMaximum)}–≤${formatFeeBoundary(feeTierBoundaries.mediumMaximum)} sat/vB`}
+                    {`>${formatFeeBoundary(feeTierBoundaries.lowMaximum)}–≤${formatFeeBoundary(feeTierBoundaries.mediumMaximum)} ${feeRateUnit}`}
                     )
                   </p>
                 </div>
@@ -520,7 +521,7 @@ const PendingBlockDetailsCard = ({
                   <div className="pending-block-color-reference danger"></div>
                   <p className="pending-block-legend-label">
                     {t`High`} (
-                    {`>${formatFeeBoundary(feeTierBoundaries.mediumMaximum)} sat/vB`}
+                    {`>${formatFeeBoundary(feeTierBoundaries.mediumMaximum)} ${feeRateUnit}`}
                     )
                   </p>
                 </div>

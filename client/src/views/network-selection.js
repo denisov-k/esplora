@@ -12,7 +12,8 @@ const networkIconSrc = name => `${staticRoot}img/icons/${networkId(name)}-menu-l
 const activeName = active || (itemEntries[0] && itemEntries[0][0]);
 const activeId = activeName && networkId(activeName);
 
-export default ({ t, page }) => (
+// nothing, not an empty container that takes room beside the search, without a network to select
+export default ({ t, page }) => !activeName ? "" : (
   <div className="main-nav-container">
     {activeName && (
       <ul className="main-nav">

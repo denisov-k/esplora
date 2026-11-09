@@ -1,3 +1,4 @@
+import { feeRateUnit } from "../const";
 import moveDec from 'move-decimal-point'
 import { sat2btc } from 'fmtbtc'
 import { maxBlockWeight, nativeAssetLabel } from '../const'
@@ -28,7 +29,7 @@ const formatTrimmedDecimal = value =>
   value.toFixed(2).replace(/\.?0+$/, '')
 
 export const formatFeeRate = (feerate, fallback='N/A') =>
-  Number.isFinite(feerate) ? `${formatTrimmedDecimal(feerate)} sat/vB` : fallback
+  Number.isFinite(feerate) ? `${formatTrimmedDecimal(feerate)} ${feeRateUnit}` : fallback
 
 export const formatUsd = (value, fallback='N/A') =>
   Number.isFinite(value)

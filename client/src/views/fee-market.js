@@ -25,12 +25,22 @@ const getFeeMarketLevels = (t) => [
 export const feeMarket = ({ feeEst, bitcoinMarketChart, t } = {}) => {
   const bitcoinPrice = getLatestBitcoinPrice(bitcoinMarketChart);
   const unavailable = t`N/A`;
+  const levels = getFeeMarketLevels(t);
+
+  // Freicoin (MIN_FEE_RATE, the overview showing the minimum fee): no section of three
+  // unavailable estimates while the node has none, for too few transactions
+  if (
+    process.env.MIN_FEE_RATE &&
+    !levels.some(({ key }) => Number.isFinite(feeEst && feeEst[feeEstimateTargets[key]]))
+  ) {
+    return "";
+  }
 
   return (
     <div className="fee-market">
       <p className="section-title">{t`Fee Market`}</p>
       <div className="fee-market-body">
-        {getFeeMarketLevels(t).map(({ key, title, tooltip }) => {
+        {levels.map(({ key, title, tooltip }) => {
           const feerate = feeEst && feeEst[feeEstimateTargets[key]];
           const feeUsd = estimateTypicalTransactionFeeUsd(
             bitcoinPrice,
@@ -43,7 +53,7 @@ export const feeMarket = ({ feeEst, bitcoinMarketChart, t } = {}) => {
               title={title}
               tooltip={tooltip}
               value={formatFeeRate(feerate, unavailable)}
-              footer={formatUsd(feeUsd, unavailable)}
+              footer={process.env.HIDE_BITCOIN_PRICE ? "" : formatUsd(feeUsd, unavailable)}
             />
           );
         })}

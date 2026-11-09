@@ -1,3 +1,4 @@
+import { feeRateUnit } from "../const";
 import {
   blockGridTransactionSelectEvent,
   maxBlockWeight,
@@ -837,7 +838,7 @@ export function renderBlockGrid(
     const definitionList = document.createElement("dl");
     const fields = [
       [labels.fee, `${formatNumber(transaction.fee)} sats`],
-      [labels.feeRate, `${formatNumber(transaction.feeRate, 2)} sat/vB`],
+      [labels.feeRate, `${formatNumber(transaction.feeRate, 2)} ${feeRateUnit}`],
       [labels.virtualSize, `${formatNumber(transaction.virtualSize)} vB`]
     ];
     const txidTerm = document.createElement("dt");

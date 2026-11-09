@@ -31,7 +31,7 @@ head
   base(href=process.env.BASE_HREF || '/')
 
   meta(name='viewport', content='width=device-width, initial-scale=1')
-  link(rel='shortcut icon', type='image/png', href=staticRoot+'img/favicon.png')
+  link(rel='icon', type=process.env.FAVICON_TYPE || 'image/png', href=staticRoot+(process.env.FAVICON || 'img/favicon.png'))
   link(rel='stylesheet', href=cssPath, data-ltr=ltrPath, data-rtl=rtlPath)
 
   if process.env.CANONICAL_URL

@@ -1,3 +1,4 @@
+import { feeRateUnit } from "../const";
 import { getMempoolDepth, squashFeeHistogram, feerateCutoff } from '../lib/fees'
 import { formatSat, formatVMB } from './util'
 import layout from './layout'
@@ -32,22 +33,22 @@ export default ({ t, mempool, feeEst, ...S }) => mempool && feeEst && layout(
       <div className="mempool-layout">
         { mempool.fee_histogram.length > 0 &&
           <dl className="mempool-histogram">
-            <h4 className="mempool-section-heading mb-3">Fee rate distribution</h4>
+            <h4 className="mempool-section-heading mb-3">{t`Fee rate distribution`}</h4>
             { squashed = squashFeeHistogram(mempool.fee_histogram), squashed.map(([ rangeStart, binSize ], i) => binSize > 0 &&
               <dd>
                 <span className="text">{`${rangeStart.toFixed(1)}${i == 0 ? '+' : ' - '+squashed[i-1][0].toFixed(1)}`}</span>
                 <span className="bar" style={{width: `${binSize/mempool.vsize*100}%`}}>{formatVMB(binSize)}</span>
               </dd>
             )}
-            <span className="label">{t`sat/vbyte`}</span>
+            <span className="label">{feeRateUnit}</span>
           </dl>
         }
 
         { !!Object.keys(feeEst).length &&
           <div className="fee-estimates">
-            <h4 className="mb-3">Fee rate estimates</h4>
+            <h4 className="mb-3">{t`Fee rate estimates`}</h4>
             <table className="table">
-                <thead><tr><th>Target</th><th>sat/vB</th><th>Mempool depth</th></tr></thead>
+                <thead><tr><th>{t`Target`}</th><th>{feeRateUnit}</th><th>{t`Mempool depth`}</th></tr></thead>
                 { sortEst(feeEst).map(([ target, feerate ]) =>
                   <tr><td>{t`${target} blocks`}</td><td>{feerate.toFixed(2)}</td><td>{t`${formatVMB(getMempoolDepth(mempool.fee_histogram, feerate))} from tip`}</td></tr>
                 )}
