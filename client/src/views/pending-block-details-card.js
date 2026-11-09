@@ -306,6 +306,10 @@ const destroyPendingBlockGrid = (vnode) => {
 };
 
 const formatFeeCost = (sats, bitcoinPrice, fallback = "N/A") => {
+  // HIDE_BITCOIN_PRICE: the fee in the native unit, without a dollar amount
+  if (process.env.HIDE_BITCOIN_PRICE) {
+    return Number.isFinite(sats) ? formatSat(Math.round(sats)) : "";
+  }
   if (!Number.isFinite(sats) || !Number.isFinite(bitcoinPrice)) {
     return fallback;
   }
@@ -591,6 +595,8 @@ const PendingBlockDetailsCard = ({
                 }
               />
             </div>
+            {/* MIN_FEE_RATE: no fee tiers while the node has no fee estimates to draw them from */}
+            {process.env.MIN_FEE_RATE && !feeTierBoundaries ? "" : (
             <div className="expanded-pending-block-row">
               {feeBucketPanel(
                 "low-fee",
@@ -620,6 +626,7 @@ const PendingBlockDetailsCard = ({
                 t`Average fee rate and transaction fee in the high-fee portion of this template.`,
               )}
             </div>
+            )}
             <div className="expanded-pending-block-row">
               {detailPanel(
                 "total-fees-collected",
@@ -627,7 +634,9 @@ const PendingBlockDetailsCard = ({
                 metrics && Number.isFinite(metrics.totalFees)
                   ? formatSat(metrics.totalFees)
                   : templateFallback,
-                metrics &&
+                process.env.HIDE_BITCOIN_PRICE
+                  ? ""
+                  : metrics &&
                 Number.isFinite(metrics.totalFees) &&
                 Number.isFinite(bitcoinPrice)
                   ? formatUsd(
