@@ -19,9 +19,10 @@ The pages differ from Bitcoin's as follows:
   `present_value`, with the face-value sums marked as such.
 - **Transaction pages.** They show the `lock_height`, the output values' reference height. The fees
   take demurrage into account (electrs computes them).
-- **Block pages.** A merge-mined block's page shows its parent block. That is a Bitcoin block,
-  linked to mempool.space, or a pool share. The page also shows the previous Bitcoin block and
-  whether the auxiliary proof-of-work checks.
+- **Block pages.** A merge-mined block's page shows the parent block header its auxiliary
+  proof-of-work commits to: its hash, its previous block, its difficulty, the parent's transaction
+  count, and whether the proof checks. Consensus does not check that the parent exists, and most
+  mainnet blocks commit to headers of no known chain, so none of it is linked to a Bitcoin explorer.
 - **The block-final transaction.** Its output, which carries each block's witness commitment, is
   labelled as such.
 - **The dashboard.** Its recommended fee falls back to the minimum relay fee: with few
@@ -45,7 +46,6 @@ They leave the explorer unchanged when not set:
 - `FREICOIN`: the block interval tooltip names Freicoin's.
 - `THEMES`: the header's light/dark switch (with `js/theme.js` loaded through `HEAD_HTML`).
 - `FAVICON`, `FAVICON_TYPE`: the page icon (default `img/favicon.png`, `image/png`).
-- `PARENT_CHAIN_EXPLORER_BLOCK`: the URL of a parent chain block, with `{hash}` replaced.
 
 The network selector shows only with `MENU_ITEMS` or `MENU_ACTIVE`, which the flavor leaves out.
 

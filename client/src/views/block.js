@@ -11,59 +11,49 @@ import BlockDetailsCard from "../components/block-details-card";
 
 const staticRoot = process.env.STATIC_ROOT || "";
 
-// Freicoin: a merge-mined block's parent chain block, linked to PARENT_CHAIN_EXPLORER_BLOCK
-// ({hash} replaced) where it is one of that chain's blocks
-const parentBlockLink = (hash) =>
-  process.env.PARENT_CHAIN_EXPLORER_BLOCK ? (
-    <a
-      className="mono"
-      href={process.env.PARENT_CHAIN_EXPLORER_BLOCK.replace("{hash}", hash)}
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      {hash}
-    </a>
-  ) : (
-    <span className="mono">{hash}</span>
-  );
+// Freicoin: the parent chain block header a merge-mined block's auxiliary proof-of-work commits
+// to. Consensus checks the work done on it, not that the parent exists, so it is shown as such,
+// with no link to a parent chain explorer.
+const parentDifficulty = (bits) => {
+  const exponent = bits >>> 24, mantissa = bits & 0x7fffff;
+  const target = mantissa * Math.pow(2, 8 * (exponent - 3));
+  return target > 0 ? (0xffff * Math.pow(2, 208)) / target : NaN;
+};
 
 const mergeMining = (parent, t) => (
   <div className="detail-grid merge-mining">
     <p className="section-title">{t`Merge mining`}</p>
     <div className="detail-grid-row">
       <div className="detail-field">
-        <p className="detail-field-label">{t`Parent block`}</p>
+        <p className="detail-field-label">{t`Parent block header`}</p>
         <div className="detail-field-content">
-          <p>
-            {parent.is_parent_chain_block ? (
-              parentBlockLink(parent.hash)
-            ) : (
-              <span className="mono">{parent.hash}</span>
-            )}
-          </p>
-          <p>
-            {parent.is_parent_chain_block
-              ? t`A Bitcoin block`
-              : t`A pool share, not a Bitcoin block`}
-          </p>
+          <p className="mono">{parent.hash}</p>
         </div>
       </div>
     </div>
     <div className="detail-grid-row">
       <div className="detail-field">
-        <p className="detail-field-label">{t`Previous Bitcoin block`}</p>
+        <p className="detail-field-label">{t`Its previous block`}</p>
         <div className="detail-field-content">
-          <p>{parentBlockLink(parent.prev_blockhash)}</p>
+          <p className="mono">{parent.prev_blockhash}</p>
         </div>
       </div>
     </div>
     <div className="detail-grid-row">
+      <div className="detail-field">
+        <p className="detail-field-label">{t`Header difficulty`}</p>
+        <div className="detail-field-content">
+          <p>{formatNumber(Math.round(parentDifficulty(parent.bits)))}</p>
+        </div>
+      </div>
       <div className="detail-field">
         <p className="detail-field-label">{t`Transactions in the parent block`}</p>
         <div className="detail-field-content">
           <p>{formatNumber(parent.tx_count)}</p>
         </div>
       </div>
+    </div>
+    <div className="detail-grid-row">
       <div className="detail-field">
         <p className="detail-field-label">{t`Auxiliary proof-of-work`}</p>
         <div className="detail-field-content">
