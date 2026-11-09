@@ -2,6 +2,10 @@ import { formatOutAmount, linkToAddr, linkToParentAddr, formatNumber } from './u
 
 const unspendable_types = [ 'op_return', 'provably_unspendable', 'fee' ]
 
+// Freicoin: the output of a block-final transaction carrying the block's witness commitment
+const typeLabel = (type, t) =>
+  type == 'witness_commitment' ? t`Witness commitment` : type.toUpperCase()
+
 const layout = (vout, desc, body, { t, ...S }) =>
   <div class={{ vout: true, active: isActive(vout, S), unblinded: isUnblinded(vout) }}>
     <div className="vout-header">
@@ -26,14 +30,14 @@ const standard = (vout, { isOpen, spend, t, ...S }) => layout(
 
 , vout.pegout ? (vout.pegout.scriptpubkey_address ? <span>{t`Peg-out to`}<br/>{linkToParentAddr(vout.pegout.scriptpubkey_address)}</span> : t`Peg-out`)
  : vout.scriptpubkey_address ? linkToAddr(vout.scriptpubkey_address, S.view == 'addr' && S.addr && S.addr.address)
- : vout.scriptpubkey_type ? vout.scriptpubkey_type.toUpperCase()
+ : vout.scriptpubkey_type ? typeLabel(vout.scriptpubkey_type, t)
  : null
 
 , isOpen && <div className="vout-body">
     { vout.scriptpubkey_type &&
       <div className="vout-body-row">
         <div>{t`Type`}</div>
-        <div>{vout.scriptpubkey_type.toUpperCase()}</div>
+        <div>{typeLabel(vout.scriptpubkey_type, t)}</div>
       </div>
     }
 

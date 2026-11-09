@@ -35,6 +35,9 @@ export default ({
     total_utxo_count = chain_utxo_count + mempool_utxo_count,
     total_utxo_sum = chain_utxo_sum + mempool_utxo_sum,
     total_txs = chain_stats.tx_count + mempool_stats.tx_count,
+    // Freicoin: the unspent outputs' value after demurrage, at the next block; the stats' sums
+    // are face values, each at its output's reference height. null past the server's utxo limit.
+    present_value = addr.present_value,
     shown_txs = addrTxs ? addrTxs.length : 0,
     // paging is on a best-effort basis, might act oddly if the set of transactions change
     // while the user is paging.
@@ -100,6 +103,10 @@ export default ({
               </div>
               <div className="info-stats-row">
                 <InfoStat
+                  title={t`Balance`}
+                  value={present_value ? formatSat(present_value.confirmed) : t`Not available`}
+                />
+                <InfoStat
                   title={t`Total tx count`}
                   value={formatNumber(total_txs)}
                 />
@@ -124,7 +131,7 @@ export default ({
                   )}
                 />
                 <InfoStat
-                  title={t`Confirmed unspent`}
+                  title={t`Confirmed unspent (face value)`}
                   value={fmtTxos(chain_utxo_count, chain_utxo_sum, t)}
                 />
               </div>
@@ -173,9 +180,25 @@ export default ({
               </div>
 
               <div className="detail-field">
-                <p className="detail-field-label">{t`Total unspent`}</p>
+                <p className="detail-field-label">{t`Total unspent (face value)`}</p>
                 <div className="detail-field-content">
                   {fmtTxos(total_utxo_count, total_utxo_sum, t)}
+                </div>
+              </div>
+            </div>
+
+            <div className="detail-grid-row">
+              <div className="detail-field">
+                <p className="detail-field-label">{t`Spendable balance`}</p>
+                <div className="detail-field-content">
+                  <p>{present_value ? formatSat(present_value.spendable) : t`Not available`}</p>
+                </div>
+              </div>
+
+              <div className="detail-field">
+                <p className="detail-field-label">{t`Balance at height`}</p>
+                <div className="detail-field-content">
+                  <p>{present_value ? formatNumber(present_value.height) : t`Not available`}</p>
                 </div>
               </div>
             </div>

@@ -1,3 +1,4 @@
+import { feeRateUnit } from "../const";
 import layout from "./layout";
 import search from "./search";
 import vinView from "./tx-vin";
@@ -89,7 +90,7 @@ export default ({
               <div className="table-header-icon-container">
                 <BlockIcon />
               </div>
-              <h1 className="table-header-title">Transaction Block</h1>
+              <h1 className="table-header-title">{t`Transaction Block`}</h1>
             </div>
             <BlockDetailsCard
               className="transaction-block-details"
@@ -267,7 +268,7 @@ const txHeader = (
           <div className="table-header-icon-container">
             <TxArrowsIcon />
           </div>
-          <h1 className="table-header-title">Transaction Details</h1>
+          <h1 className="table-header-title">{t`Transaction Details`}</h1>
         </div>
         <div className="transaction-table-body">
           <div className="identifier-row">
@@ -290,27 +291,29 @@ const txHeader = (
             </StatusBadge>
           </div>
           <div className="info-stats-row">
-            <InfoStat title="SIZE" value={`${formatNumber(tx.size)} B`} />
+            <InfoStat title={t`SIZE`} value={`${formatNumber(tx.size)} B`} />
             <InfoStat
-              title="VIRTUAL SIZE"
+              title={t`VIRTUAL SIZE`}
               value={`${formatNumber(Math.ceil(tx.weight / 4))} vB`}
             />
             <InfoStat
-              title="WEIGHT UNITS"
+              title={t`WEIGHT UNITS`}
               value={`${formatNumber(tx.weight)} WU`}
             />
-            <InfoStat title="VERSION" value={tx.version} />
-            <InfoStat title="LOCK TIME" value={tx.locktime} />
+            <InfoStat title={t`VERSION`} value={tx.version} />
+            <InfoStat title={t`LOCK TIME`} value={tx.locktime} />
+            {/* Freicoin: the reference height of the output values */}
+            <InfoStat title={t`LOCK HEIGHT`} value={tx.lock_height} />
 
             {isRbf(tx) ? (
-              <InfoStat title="REPLACE BY FEE" value={t`Opted in`} />
+              <InfoStat title={t`REPLACE BY FEE`} value={t`Opted in`} />
             ) : null}
           </div>
           <div className="detail-grid">
             <div className="detail-grid-row">
               {isConfirmed ? (
                 <div className="detail-field">
-                  <p className="detail-field-label">CONFIRMATION TIME</p>
+                  <p className="detail-field-label">{t`CONFIRMATION TIME`}</p>
                   <div className="detail-field-content">
                     <p>{confirmationTime}</p>
                   </div>
@@ -342,7 +345,7 @@ const txHeader = (
               )}
 
               <div className="detail-field">
-                <p className="detail-field-label">TRANSACTION FEES</p>
+                <p className="detail-field-label">{t`TRANSACTION FEES`}</p>
                 <div className="detail-field-content">
                   {feerate != null ? (
                     <div>
@@ -351,7 +354,7 @@ const txHeader = (
                           {formatSat(tx.fee)}
                         </p>
                         <p className="transaction-fee-rate">
-                          {`(${feerate.toFixed(2)} sat/vB)`}
+                          {`(${feerate.toFixed(2)} ${feeRateUnit})`}
                         </p>
                       </div>
                       {overpaying > OVERPAYMENT_WARN ? (
@@ -361,7 +364,7 @@ const txHeader = (
                               ? "danger"
                               : "warning"
                           }`}
-                          title={t`compared to the suggested fee of ${feeEst[2].toFixed(1)} sat/vB for confirmation within 2 blocks`}
+                          title={t`compared to the suggested fee of ${feeEst[2].toFixed(1)} ${feeRateUnit} for confirmation within 2 blocks`}
                         >
                           {t`Overpaying by ${Math.round((overpaying - 1) * 100)}%`}
                         </p>
@@ -376,18 +379,21 @@ const txHeader = (
 
             <div className="detail-grid-row">
               <div className="detail-field">
-                <p className="detail-field-label">PRIVACY ANALYSIS</p>
+                <p className="detail-field-label">{t`PRIVACY ANALYSIS`}</p>
                 <div className="detail-field-content">
                   <div>{privacyAnalysisView(privacyAnalysis, t)}</div>
                 </div>
               </div>
 
+              {/* Freicoin: Bitcoin's address types, which the savings are computed for, are not its own */}
+              {process.env.HIDE_SEGWIT_GAINS ? null : (
               <div className="detail-field">
-                <p className="detail-field-label">SEGWIT FEE SAVINGS</p>
+                <p className="detail-field-label">{t`SEGWIT FEE SAVINGS`}</p>
                 <div className="detail-field-content">
                   <div>{segwitSavings || "N/A"}</div>
                 </div>
               </div>
+              )}
             </div>
           </div>
         </div>

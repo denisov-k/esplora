@@ -1,3 +1,4 @@
+import { feeRateUnit } from "../const";
 import { formatSat, formatNumber, truncateTxid } from "./util";
 import loader from "../components/loading";
 import { CopyIcon, TxArrowsIcon } from "../components/icons";
@@ -11,7 +12,8 @@ export const transactions = (txs, viewMore, { t, ...S }) => (
     {!txs ? (
       loader()
     ) : !txs.length ? (
-      <p>{t`No recent transactions`}</p>
+      // the recent transactions are the mempool's: say so
+      <p>{t`No unconfirmed transactions: the mempool is empty.`}</p>
     ) : (
       <div className="latest-transactions-table">
         <div className="table-header">
@@ -65,7 +67,7 @@ export const transactions = (txs, viewMore, { t, ...S }) => (
                 </div>
                 <div className={`transaction-table-field transaction-table-transaction-fee ${feeClass}`}>
                   <div className="transaction-table-field-label">{t`FEE`}</div>
-                  <div className="transaction-table-field-value">{`${feerate.toFixed(2)} sat/vB`}</div>
+                  <div className="transaction-table-field-value">{`${feerate.toFixed(2)} ${feeRateUnit}`}</div>
                 </div>
               </div>
               </a>
